@@ -1,0 +1,14 @@
+#####################################
+###Unreal Generated Files############
+#####################################
+*/Build
+*/Binaries
+*/DeriveDataCahe
+*/Intermediate
+*/Saved
+RoomScape/Content/StarterContent
+
+#####################################
+###VS Generated Files################
+#####################################
+*.VC.db
