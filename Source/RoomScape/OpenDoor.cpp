@@ -27,8 +27,6 @@ void UOpenDoor::BeginPlay()
 	FRotator rotation = owner->GetActorRotation();
 	rotation.Yaw = 60;
 	owner->SetActorRotation(rotation);
-	UE_LOG(LogTemp, Warning, TEXT("ROTATE!!"));
-
 }
 
 
