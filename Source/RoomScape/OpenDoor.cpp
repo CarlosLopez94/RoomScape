@@ -2,6 +2,7 @@
 
 #include "OpenDoor.h"
 #include "GameFramework/Actor.h"
+#include "Engine/World.h"
 
 
 // Sets default values for this component's properties
@@ -20,6 +21,40 @@ void UOpenDoor::BeginPlay()
 {
 	Super::BeginPlay();
 
+	actorThatOpens = GetWorld()->GetFirstPlayerController()->GetPawn();
+}
+
+// Called every frame
+void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	//Poll the triggerVolumes, if 
+	bool open = true;
+	if (pleassurePlates.Num()>0 && actorThatOpens) {
+		int32 i = 0;
+		while(open && i<pleassurePlates.Num()){
+			ATriggerVolume* plate = pleassurePlates[i];
+			open = plate->IsOverlappingActor(actorThatOpens);
+			i++;
+		}
+	}
+	else {
+		open = false;
+	}
+
+	if (open) {
+		OpenDoor();
+	}
+
+	// ...
+}
+
+/*
+*Opens the door
+*/
+void UOpenDoor::OpenDoor()
+{
 	// Find the owner
 	AActor* owner = GetOwner();
 
@@ -28,13 +63,3 @@ void UOpenDoor::BeginPlay()
 	rotation.Yaw = 60;
 	owner->SetActorRotation(rotation);
 }
-
-
-// Called every frame
-void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
-}
-
