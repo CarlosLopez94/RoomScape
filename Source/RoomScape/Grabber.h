@@ -23,14 +23,20 @@ protected:
 public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
 	
 private:
 	void Grab();
 	void Release();
+	//Checks and returns the first physhics body in reach
+	void GetFirstBodyInReach();
+
 
 	UPROPERTY(EditAnywhere, Category = "GrabberLine")
 		float reach = 100.f;
 
 	UPhysicsHandleComponent* physicsHandleComponent = nullptr;
 	UInputComponent* inputComponent;
+
+
 };

@@ -48,6 +48,28 @@ void UGrabber::BeginPlay() {
 void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+}
+
+
+void UGrabber::Grab() {
+	UE_LOG(LogTemp, Warning, TEXT("Grab Pressed"));
+
+	/// LINE TRACE and reach any actor with physics body collision channel set
+	GetFirstBodyInReach();
+
+	///If we hit something then attach a physics handle
+
+	///TODO attach physhics handle
+
+	///TODO release physhics handle
+
+}
+
+void UGrabber::Release() {
+	UE_LOG(LogTemp, Warning, TEXT("Grab Released"));
+}
+
+void UGrabber::GetFirstBodyInReach() {
 	///Get player view point this tick
 	FVector playerViewPointLocation;
 	FRotator playerViewPointRotation;
@@ -72,16 +94,7 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 		traceParameters);
 
 	///See what we hit
-	if (hit.Actor!=nullptr) {
-		UE_LOG(LogTemp, Warning, TEXT("%s can grabber %s"),*GetOwner()->GetName(),*hit.Actor->GetName());
+	if (hit.Actor != nullptr) {
+		UE_LOG(LogTemp, Warning, TEXT("%s can grabber %s"), *GetOwner()->GetName(), *hit.Actor->GetName());
 	}
-}
-
-
-void UGrabber::Grab() {
-	UE_LOG(LogTemp, Warning, TEXT("Grab Pressed"));
-}
-
-void UGrabber::Release() {
-	UE_LOG(LogTemp, Warning, TEXT("Grab Released"));
 }
