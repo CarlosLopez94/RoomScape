@@ -81,4 +81,5 @@ Intermediate/*
 DerivedDataCache/*
 
 # Starter Content Unreal Engine
-Content/StarterContent/*
+Content/StarterContent/Textures
+Content/StarterContent/HDRI
