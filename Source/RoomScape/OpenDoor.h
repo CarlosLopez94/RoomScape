@@ -22,6 +22,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	void OpenDoor();
+	void CloseDoor();
 
 public:
 	// Called every frame
@@ -36,5 +37,10 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Open Mechanism")
 		AActor* actorThatOpens;
+	
+	UPROPERTY(EditAnywhere, Category = "Open Mechanism")
+		float closeDoorDelay = 0.25f;
+
+	float LastDoorOpenTime;
 
 };
