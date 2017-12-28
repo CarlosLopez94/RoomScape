@@ -25,10 +25,22 @@ void UGrabber::BeginPlay() {
 	physicsHandleComponent = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
 
 	if (physicsHandleComponent) {
-		UE_LOG(LogTemp, Warning, TEXT("%s has physhicsHandleComponent"),*GetOwner()->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("%s has PhyshicsHandleComponent"),*GetOwner()->GetName());
 	} else {
-		UE_LOG(LogTemp, Error, TEXT("%s DOESNT HAVE any physhicsHandleComponent"), *GetOwner()->GetName());
+		UE_LOG(LogTemp, Error, TEXT("%s DOESNT HAVE any PhyshicsHandleComponent"), *GetOwner()->GetName());
 	}
+
+	///Find the PawnInputComponent
+	inputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
+	if (inputComponent) {
+		UE_LOG(LogTemp, Warning, TEXT("%s has pawnInputComponent"), *GetOwner()->GetName());
+		inputComponent->BindAction("Grab", IE_Pressed, this, &UGrabber::Grab);
+		inputComponent->BindAction("Grab", IE_Released, this, &UGrabber::Release);
+
+	} else {
+		UE_LOG(LogTemp, Error, TEXT("%s DOESNT HAVE any pawnInputComponent"), *GetOwner()->GetName());
+	}
+
 }
 
 
@@ -63,6 +75,13 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	if (hit.Actor!=nullptr) {
 		UE_LOG(LogTemp, Warning, TEXT("%s can grabber %s"),*GetOwner()->GetName(),*hit.Actor->GetName());
 	}
-
 }
 
+
+void UGrabber::Grab() {
+	UE_LOG(LogTemp, Warning, TEXT("Grab Pressed"));
+}
+
+void UGrabber::Release() {
+	UE_LOG(LogTemp, Warning, TEXT("Grab Released"));
+}
