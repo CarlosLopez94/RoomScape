@@ -21,8 +21,14 @@ UGrabber::UGrabber() {
 void UGrabber::BeginPlay() {
 	Super::BeginPlay();
 
-	UE_LOG(LogTemp, Warning, TEXT("Grabber Component says MURRAY!"));
+	///Find the PhyshicsHandleComponent
+	physicsHandleComponent = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
 
+	if (physicsHandleComponent) {
+		UE_LOG(LogTemp, Warning, TEXT("%s has physhicsHandleComponent"),*GetOwner()->GetName());
+	} else {
+		UE_LOG(LogTemp, Error, TEXT("%s DOESNT HAVE any physhicsHandleComponent"), *GetOwner()->GetName());
+	}
 }
 
 
