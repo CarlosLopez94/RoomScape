@@ -3,7 +3,8 @@
 #include "Grabber.h"
 #include "GameFramework/Actor.h"
 #include "Engine/World.h"
-
+#include "Public/DrawDebugHelpers.h"
+#include "Public/Math/Color.h"
 
 
 // Sets default values for this component's properties
@@ -37,8 +38,11 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	FRotator playerViewPointRotation;
 	GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(playerViewPointLocation, playerViewPointRotation);
 
-	UE_LOG(LogTemp, Warning, TEXT("%s location: (%f,%f,%f) AND rotation: (%f,%f,%f)"), *(GetOwner()->GetName()), playerViewPointLocation.X, playerViewPointLocation.Y, playerViewPointLocation.Z, playerViewPointRotation.Roll, playerViewPointRotation.Pitch, playerViewPointRotation.Yaw);
+	//UE_LOG(LogTemp, Warning, TEXT("%s location: (%f,%f,%f) AND rotation: (%f,%f,%f)"), *(GetOwner()->GetName()), playerViewPointLocation.X, playerViewPointLocation.Y, playerViewPointLocation.Z, playerViewPointRotation.Roll, playerViewPointRotation.Pitch, playerViewPointRotation.Yaw);
 
+	//Draw a red trace in the world
+	FVector lineTraceEnd = playerViewPointLocation + playerViewPointRotation.Vector()*reach;
+	DrawDebugLine(GetWorld(),playerViewPointLocation, lineTraceEnd,FColor::Red,false,0.f,0.f,10.f);
 
 	//Ray-cast out the reach distance
 
