@@ -95,7 +95,7 @@ FHitResult UGrabber::GetFirstBodyInReach() {
 
 	///Draw a red trace in the world
 	FVector lineTraceEnd = playerViewPointLocation + playerViewPointRotation.Vector()*reach;
-	DrawDebugLine(GetWorld(), playerViewPointLocation, lineTraceEnd, FColor::Red, false, 0.f, 0.f, 10.f);
+	//DrawDebugLine(GetWorld(), playerViewPointLocation, lineTraceEnd, FColor::Red, false, 0.f, 0.f, 10.f);
 
 	///Setup query parameters
 	FCollisionQueryParams traceParameters = FCollisionQueryParams(FName(TEXT("")), false, GetOwner());
