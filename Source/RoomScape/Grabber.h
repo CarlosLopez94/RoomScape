@@ -29,7 +29,7 @@ private:
 	void Grab();
 	void Release();
 	//Checks and returns the first physhics body in reach
-	void GetFirstBodyInReach();
+	FHitResult GetFirstBodyInReach();
 
 
 	UPROPERTY(EditAnywhere, Category = "GrabberLine")
