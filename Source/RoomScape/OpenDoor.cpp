@@ -11,8 +11,6 @@ UOpenDoor::UOpenDoor() {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
 }
 
 
@@ -56,13 +54,14 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 *Opens the door
 */
 void UOpenDoor::OpenDoor() {
+	onOpenRequest.Broadcast();
 	// Find the owner
-	AActor* owner = GetOwner();
+	//AActor* owner = GetOwner();
 
-	//Rotate the owner (door) some degrees to open
-	FRotator rotation = owner->GetActorRotation();
-	rotation.Yaw = openAngle;
-	owner->SetActorRotation(rotation);
+	////Rotate the owner (door) some degrees to open
+	//FRotator rotation = owner->GetActorRotation();
+	//rotation.Yaw = openAngle;
+	//owner->SetActorRotation(rotation);
 }
 
 
@@ -83,12 +82,15 @@ float UOpenDoor::GetTotalMassOnPlate(ATriggerVolume* pleassurePlate) {
 	float totalMass = 0;
 
 	//Get actors overlapping with pleassurePlate and sum their mass
-	TArray<AActor*> overlappingActors;
-	pleassurePlate->GetOverlappingActors(overlappingActors, nullptr);
-	for (const AActor* actor : overlappingActors) {
-		auto primitiveComponent = actor->FindComponentByClass<UPrimitiveComponent>();
-		totalMass += primitiveComponent->GetMass();
+	if (pleassurePlate != nullptr) {
+		TArray<AActor*> overlappingActors;
+		pleassurePlate->GetOverlappingActors(overlappingActors, nullptr);
+		for (const AActor* actor : overlappingActors) {
+			auto primitiveComponent = actor->FindComponentByClass<UPrimitiveComponent>();
+			totalMass += primitiveComponent->GetMass();
+		}
+	} else {
+		UE_LOG(LogTemp, Warning, TEXT("%s doesnt have any plates"), *GetOwner()->GetName());
 	}
-
 	return totalMass;
 }

@@ -7,6 +7,7 @@
 #include "Engine/TriggerVolume.h"
 #include "OpenDoor.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnOpenRequest);
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class ROOMSCAPE_API UOpenDoor : public UActorComponent
@@ -28,6 +29,10 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	UPROPERTY(BlueprintAssignable)
+		FOnOpenRequest onOpenRequest;
+
+
 private:	
 	UPROPERTY(EditAnywhere, Category = "Open Mechanism")
 		float openAngle = 90.f;
@@ -39,6 +44,5 @@ private:
 		TArray<ATriggerVolume*> pleassurePlates;
 
 	float LastDoorOpenTime;
-
 	float GetTotalMassOnPlate(ATriggerVolume* pleassurePlate);
 };
