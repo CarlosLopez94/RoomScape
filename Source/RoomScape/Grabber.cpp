@@ -24,7 +24,7 @@ void UGrabber::BeginPlay() {
 	///Find the PhyshicsHandleComponent
 	physicsHandleComponent = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
 
-	if (physicsHandleComponent) {
+	if (physicsHandleComponent != nullptr) {
 		UE_LOG(LogTemp, Warning, TEXT("%s has PhyshicsHandleComponent"), *GetOwner()->GetName());
 	} else {
 		UE_LOG(LogTemp, Error, TEXT("%s DOESNT HAVE any PhyshicsHandleComponent"), *GetOwner()->GetName());
@@ -32,7 +32,7 @@ void UGrabber::BeginPlay() {
 
 	///Find the PawnInputComponent
 	inputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
-	if (inputComponent) {
+	if (inputComponent != nullptr) {
 		UE_LOG(LogTemp, Warning, TEXT("%s has pawnInputComponent"), *GetOwner()->GetName());
 		inputComponent->BindAction("Grab", IE_Pressed, this, &UGrabber::Grab);
 		inputComponent->BindAction("Grab", IE_Released, this, &UGrabber::Release);
