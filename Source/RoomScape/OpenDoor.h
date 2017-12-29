@@ -7,7 +7,8 @@
 #include "Engine/TriggerVolume.h"
 #include "OpenDoor.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnOpenRequest);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDoorEvent);
+
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class ROOMSCAPE_API UOpenDoor : public UActorComponent
@@ -22,27 +23,20 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	void OpenDoor();
-	void CloseDoor();
-
 public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UPROPERTY(BlueprintAssignable)
-		FOnOpenRequest onOpenRequest;
-
+		FDoorEvent onOpen;
+	UPROPERTY(BlueprintAssignable)
+		FDoorEvent onClose;
 
 private:	
 	UPROPERTY(EditAnywhere, Category = "Open Mechanism")
-		float openAngle = 90.f;
-	UPROPERTY(EditAnywhere, Category = "Open Mechanism")
 		float massToOpen = 30.f;
-	UPROPERTY(EditAnywhere, Category = "Open Mechanism")
-		float closeDoorDelay = 0.25f;
 	UPROPERTY(EditAnywhere, Category = "Open Mechanism")
 		TArray<ATriggerVolume*> pleassurePlates;
 
-	float LastDoorOpenTime;
 	float GetTotalMassOnPlate(ATriggerVolume* pleassurePlate);
 };

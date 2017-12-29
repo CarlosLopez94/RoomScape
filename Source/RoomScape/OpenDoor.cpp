@@ -38,44 +38,10 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 
 	//Open the door if all the plates of the door were trigering
 	if (open) {
-		OpenDoor();
-		LastDoorOpenTime = GetWorld()->GetTimeSeconds();
+		onOpen.Broadcast();
+	} else {
+		onClose.Broadcast();
 	}
-
-	// Close the door when the time is over
-	float currentTime = GetWorld()->GetTimeSeconds();
-
-	if (currentTime - LastDoorOpenTime > closeDoorDelay) {
-		CloseDoor();
-	}
-}
-
-/*
-*Opens the door
-*/
-void UOpenDoor::OpenDoor() {
-	onOpenRequest.Broadcast();
-	// Find the owner
-	//AActor* owner = GetOwner();
-
-	////Rotate the owner (door) some degrees to open
-	//FRotator rotation = owner->GetActorRotation();
-	//rotation.Yaw = openAngle;
-	//owner->SetActorRotation(rotation);
-}
-
-
-/*
-*Close the door
-*/
-void UOpenDoor::CloseDoor() {
-	// Find the owner
-	AActor* owner = GetOwner();
-
-	//Rotate the owner (door) some degrees to open
-	FRotator rotation = owner->GetActorRotation();
-	rotation.Yaw = 0;
-	owner->SetActorRotation(rotation);
 }
 
 float UOpenDoor::GetTotalMassOnPlate(ATriggerVolume* pleassurePlate) {

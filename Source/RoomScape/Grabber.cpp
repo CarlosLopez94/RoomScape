@@ -13,9 +13,7 @@ UGrabber::UGrabber() {
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
 }
-
 
 // Called when the game starts
 void UGrabber::BeginPlay() {
@@ -40,9 +38,7 @@ void UGrabber::BeginPlay() {
 	} else {
 		UE_LOG(LogTemp, Error, TEXT("%s DOESNT HAVE any pawnInputComponent"), *GetOwner()->GetName());
 	}
-
 }
-
 
 // Called every frame
 void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
@@ -75,14 +71,11 @@ void UGrabber::Grab() {
 
 		///If we hit something then attach a physics handle
 		physicsHandleComponent->GrabComponent(componentToGrab, NAME_None, hitResult.Actor->GetActorLocation(), true);
-		///TODO attach physhics handle
 	}
 }
 
 void UGrabber::Release() {
-	///TODO release physhics handle
 	physicsHandleComponent->ReleaseComponent();
-	UE_LOG(LogTemp, Warning, TEXT("Grab Released"));
 }
 
 FHitResult UGrabber::GetFirstBodyInReach() {
