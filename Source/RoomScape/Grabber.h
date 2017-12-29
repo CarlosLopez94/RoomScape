@@ -33,7 +33,7 @@ private:
 
 
 	UPROPERTY(EditAnywhere, Category = "GrabberLine")
-		float reach = 100.f;
+		float reach = 150.f;
 
 	UPhysicsHandleComponent* physicsHandleComponent = nullptr;
 	UInputComponent* inputComponent;

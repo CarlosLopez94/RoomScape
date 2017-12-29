@@ -3,11 +3,11 @@
 #include "OpenDoor.h"
 #include "GameFramework/Actor.h"
 #include "Engine/World.h"
+#include "Components/PrimitiveComponent.h"
 
 
 // Sets default values for this component's properties
-UOpenDoor::UOpenDoor()
-{
+UOpenDoor::UOpenDoor() {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
@@ -17,29 +17,24 @@ UOpenDoor::UOpenDoor()
 
 
 // Called when the game starts
-void UOpenDoor::BeginPlay()
-{
+void UOpenDoor::BeginPlay() {
 	Super::BeginPlay();
-
-	actorThatOpens = GetWorld()->GetFirstPlayerController()->GetPawn();
 }
 
 // Called every frame
-void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
+void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	//Poll the triggerVolumes, if 
 	bool open = true;
-	if (pleassurePlates.Num()>0 && actorThatOpens) {
+	if (pleassurePlates.Num() > 0) {
 		int32 i = 0;
-		while(open && i<pleassurePlates.Num()){
+		while (open && i < pleassurePlates.Num()) {
 			ATriggerVolume* plate = pleassurePlates[i];
-			open = plate->IsOverlappingActor(actorThatOpens);
+			open = GetTotalMassOnPlate(plate) >= massToOpen;
 			i++;
 		}
-	}
-	else {
+	} else {
 		open = false;
 	}
 
@@ -51,8 +46,8 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 
 	// Close the door when the time is over
 	float currentTime = GetWorld()->GetTimeSeconds();
-	
-	if (currentTime-LastDoorOpenTime>closeDoorDelay) {
+
+	if (currentTime - LastDoorOpenTime > closeDoorDelay) {
 		CloseDoor();
 	}
 }
@@ -60,8 +55,7 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 /*
 *Opens the door
 */
-void UOpenDoor::OpenDoor()
-{
+void UOpenDoor::OpenDoor() {
 	// Find the owner
 	AActor* owner = GetOwner();
 
@@ -75,8 +69,7 @@ void UOpenDoor::OpenDoor()
 /*
 *Close the door
 */
-void UOpenDoor::CloseDoor()
-{
+void UOpenDoor::CloseDoor() {
 	// Find the owner
 	AActor* owner = GetOwner();
 
@@ -84,4 +77,18 @@ void UOpenDoor::CloseDoor()
 	FRotator rotation = owner->GetActorRotation();
 	rotation.Yaw = 0;
 	owner->SetActorRotation(rotation);
+}
+
+float UOpenDoor::GetTotalMassOnPlate(ATriggerVolume* pleassurePlate) {
+	float totalMass = 0;
+
+	//Get actors overlapping with pleassurePlate and sum their mass
+	TArray<AActor*> overlappingActors;
+	pleassurePlate->GetOverlappingActors(overlappingActors, nullptr);
+	for (const AActor* actor : overlappingActors) {
+		auto primitiveComponent = actor->FindComponentByClass<UPrimitiveComponent>();
+		totalMass += primitiveComponent->GetMass();
+	}
+
+	return totalMass;
 }

@@ -28,19 +28,17 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-private:
+private:	
 	UPROPERTY(EditAnywhere, Category = "Open Mechanism")
-		float openAngle = 60.f;
-
+		float openAngle = 90.f;
+	UPROPERTY(EditAnywhere, Category = "Open Mechanism")
+		float massToOpen = 30.f;
+	UPROPERTY(EditAnywhere, Category = "Open Mechanism")
+		float closeDoorDelay = 0.25f;
 	UPROPERTY(EditAnywhere, Category = "Open Mechanism")
 		TArray<ATriggerVolume*> pleassurePlates;
 
-	UPROPERTY(EditAnywhere, Category = "Open Mechanism")
-		AActor* actorThatOpens;
-	
-	UPROPERTY(EditAnywhere, Category = "Open Mechanism")
-		float closeDoorDelay = 0.25f;
-
 	float LastDoorOpenTime;
 
+	float GetTotalMassOnPlate(ATriggerVolume* pleassurePlate);
 };
