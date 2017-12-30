@@ -7,8 +7,7 @@
 
 
 // Sets default values for this component's properties
-UPictureComponent::UPictureComponent()
-{
+UPictureComponent::UPictureComponent() {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
@@ -18,18 +17,16 @@ UPictureComponent::UPictureComponent()
 
 
 // Called when the game starts
-void UPictureComponent::BeginPlay()
-{
+void UPictureComponent::BeginPlay() {
 	Super::BeginPlay();
 
 	// ...
-	
+
 }
 
 
 // Called every frame
-void UPictureComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
+void UPictureComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
@@ -37,16 +34,8 @@ void UPictureComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAct
 
 //Enable physchis to this actor and enables actorToEnable
 void UPictureComponent::Trigger() {
-	if (actorToEnable!=nullptr) {
-		UButtonTriggerAction* buttonTriggerComponent = actorToEnable->FindComponentByClass<UButtonTriggerAction>();
-		if (buttonTriggerComponent!=nullptr) {
-			//Enable the button
-			buttonTriggerComponent->isEnable = true;
+	//Enable physchics for this object
+	UStaticMeshComponent* staticMeshComponent = GetOwner()->FindComponentByClass<UStaticMeshComponent>();
+	staticMeshComponent->SetSimulatePhysics(true);
 
-			//Enable physchics for this object
-			UStaticMeshComponent* staticMeshComponent = GetOwner()->FindComponentByClass<UStaticMeshComponent>();
-			staticMeshComponent->SetSimulatePhysics(true);
-		}
-
-	}
 }

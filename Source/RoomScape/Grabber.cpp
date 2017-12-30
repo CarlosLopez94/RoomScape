@@ -6,7 +6,7 @@
 #include "Public/DrawDebugHelpers.h"
 #include "Public/Math/Color.h"
 #include "ButtonTriggerAction.h"
-
+#include "PictureComponent.h"
 
 // Sets default values for this component's properties
 UGrabber::UGrabber() {
@@ -69,11 +69,15 @@ void UGrabber::Grab() {
 	auto hitResult = GetFirstBodyInReach();
 	if (hitResult.Actor != nullptr) {
 		
-		//We check if it has the button component, if fails then grab it 
+		//We check if it has the button component or the pictureComponent, if fails then grab it 
 		auto buttonActionComponent = hitResult.Actor->FindComponentByClass<UButtonTriggerAction>();
+		auto pictureComponent = hitResult.Actor->FindComponentByClass<UPictureComponent>();
 		if (buttonActionComponent !=nullptr) {
 			///If enters here, is the button: we trigger his action
 			buttonActionComponent->TriggerAction();
+		} else if (pictureComponent!=nullptr) {
+			///If enters here, its the picture!
+			pictureComponent->Trigger();
 		} else {
 			///If its not the button then he gab it
 			auto componentToGrab = hitResult.GetComponent();

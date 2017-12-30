@@ -32,7 +32,6 @@ void UButtonTriggerAction::TickComponent(float DeltaTime, ELevelTick TickType, F
 }
 
 void UButtonTriggerAction::TriggerAction() {
-	if (isEnable) {
 		for (const AActor* actor : actorsToTrigger) {
 			if (actor != nullptr) {
 				USlidingDoor* slidingDoor = actor->FindComponentByClass<USlidingDoor>();
@@ -42,5 +41,4 @@ void UButtonTriggerAction::TriggerAction() {
 				}
 			}
 		}
-	}
 }
