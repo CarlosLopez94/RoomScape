@@ -5,6 +5,7 @@
 #include "Engine/World.h"
 #include "Public/DrawDebugHelpers.h"
 #include "Public/Math/Color.h"
+#include "ButtonTriggerAction.h"
 
 
 // Sets default values for this component's properties
@@ -67,10 +68,19 @@ void UGrabber::Grab() {
 	/// LINE TRACE and reach any actor with physics body collision channel set
 	auto hitResult = GetFirstBodyInReach();
 	if (hitResult.Actor != nullptr) {
-		auto componentToGrab = hitResult.GetComponent();
+		
+		//We do a cast to the button, if fails then grab it 
+		auto buttonActionComponent = hitResult.Actor->FindComponentByClass<UButtonTriggerAction>();
+		if (buttonActionComponent !=nullptr) {
+			//Is the button
+			UE_LOG(LogTemp, Warning, TEXT("IS THE BUTTON!!!"));
+		} else {
 
-		///If we hit something then attach a physics handle
-		physicsHandleComponent->GrabComponent(componentToGrab, NAME_None, hitResult.Actor->GetActorLocation(), true);
+			auto componentToGrab = hitResult.GetComponent();
+
+			///If we hit something then attach a physics handle
+			physicsHandleComponent->GrabComponent(componentToGrab, NAME_None, hitResult.Actor->GetActorLocation(), true);
+		}
 	}
 }
 
@@ -109,3 +119,4 @@ FHitResult UGrabber::GetFirstBodyInReach() {
 
 	return hit;
 }
+
