@@ -1,6 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "PictureComponent.h"
+#include "ButtonTriggerAction.h"
+#include "GameFramework/Actor.h"
+#include "Components/StaticMeshComponent.h"
 
 
 // Sets default values for this component's properties
@@ -32,3 +35,18 @@ void UPictureComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAct
 	// ...
 }
 
+//Enable physchis to this actor and enables actorToEnable
+void UPictureComponent::Trigger() {
+	if (actorToEnable!=nullptr) {
+		UButtonTriggerAction* buttonTriggerComponent = actorToEnable->FindComponentByClass<UButtonTriggerAction>();
+		if (buttonTriggerComponent!=nullptr) {
+			//Enable the button
+			buttonTriggerComponent->isEnable = true;
+
+			//Enable physchics for this object
+			UStaticMeshComponent* staticMeshComponent = GetOwner()->FindComponentByClass<UStaticMeshComponent>();
+			staticMeshComponent->SetSimulatePhysics(true);
+		}
+
+	}
+}

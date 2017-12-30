@@ -14,8 +14,8 @@ class ROOMSCAPE_API UButtonTriggerAction : public UActorComponent
 
 public:	
 
-	UPROPERTY(EdtiAnywhere, Category = "Action")
-		bool buttonEnabled;
+	UPROPERTY(EditAnywhere, Category = "Action")
+		bool isEnable;
 	// Sets default values for this component's properties
 	UButtonTriggerAction();
 
