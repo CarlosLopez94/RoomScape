@@ -4,20 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "ButtonTriggerAction.generated.h"
+#include "PictureComponent.generated.h"
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class ROOMSCAPE_API UButtonTriggerAction : public UActorComponent
+class ROOMSCAPE_API UPictureComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
-
-	UPROPERTY(EdtiAnywhere, Category = "Action")
-		bool buttonEnabled;
 	// Sets default values for this component's properties
-	UButtonTriggerAction();
+	UPictureComponent();
 
 protected:
 	// Called when the game starts
@@ -26,11 +23,7 @@ protected:
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	void TriggerAction();
 
-private:
-	UPROPERTY(EditAnywhere, Category = "Action")
-		TArray<AActor*> actorsToTrigger;
-
+UPROPERTY(EditAnywhere, Category="Action")
 	
 };

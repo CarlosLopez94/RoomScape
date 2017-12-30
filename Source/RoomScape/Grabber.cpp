@@ -69,13 +69,13 @@ void UGrabber::Grab() {
 	auto hitResult = GetFirstBodyInReach();
 	if (hitResult.Actor != nullptr) {
 		
-		//We do a cast to the button, if fails then grab it 
+		//We check if it has the button component, if fails then grab it 
 		auto buttonActionComponent = hitResult.Actor->FindComponentByClass<UButtonTriggerAction>();
 		if (buttonActionComponent !=nullptr) {
-			//Is the button
-			UE_LOG(LogTemp, Warning, TEXT("IS THE BUTTON!!!"));
+			///If enters here, is the button: we trigger his action
+			buttonActionComponent->TriggerAction();
 		} else {
-
+			///If its not the button then he gab it
 			auto componentToGrab = hitResult.GetComponent();
 
 			///If we hit something then attach a physics handle
