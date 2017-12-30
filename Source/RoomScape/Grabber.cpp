@@ -6,7 +6,7 @@
 #include "Public/DrawDebugHelpers.h"
 #include "Public/Math/Color.h"
 #include "ButtonTriggerAction.h"
-#include "PictureComponent.h"
+#include "EnablePhyshics.h"
 
 // Sets default values for this component's properties
 UGrabber::UGrabber() {
@@ -68,16 +68,16 @@ void UGrabber::Grab() {
 	/// LINE TRACE and reach any actor with physics body collision channel set
 	auto hitResult = GetFirstBodyInReach();
 	if (hitResult.Actor != nullptr) {
-		
+
 		//We check if it has the button component or the pictureComponent, if fails then grab it 
 		auto buttonActionComponent = hitResult.Actor->FindComponentByClass<UButtonTriggerAction>();
-		auto pictureComponent = hitResult.Actor->FindComponentByClass<UPictureComponent>();
-		if (buttonActionComponent !=nullptr) {
+		auto enablePhyshicsComponent = hitResult.Actor->FindComponentByClass<UEnablePhyshics>();
+		if (buttonActionComponent != nullptr) {
 			///If enters here, is the button: we trigger his action
 			buttonActionComponent->TriggerAction();
-		} else if (pictureComponent!=nullptr) {
+		} else if (enablePhyshicsComponent != nullptr) {
 			///If enters here, its the picture!
-			pictureComponent->Trigger();
+			enablePhyshicsComponent->Trigger();
 		} else {
 			///If its not the button then he gab it
 			auto componentToGrab = hitResult.GetComponent();

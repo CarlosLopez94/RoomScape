@@ -4,17 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "PictureComponent.generated.h"
+#include "EnablePhyshics.generated.h"
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class ROOMSCAPE_API UPictureComponent : public UActorComponent
+class ROOMSCAPE_API UEnablePhyshics : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
 	// Sets default values for this component's properties
-	UPictureComponent();
+	UEnablePhyshics();
 
 	//Enable physchis to this actor and enables actorToEnable
 	void Trigger();
