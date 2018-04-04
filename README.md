@@ -12,3 +12,5 @@ The players can check the weight on each plate at anytime.
 <p align="center">
   <a href="https://imgflip.com/gif/21xn89"><img src="https://i.imgflip.com/21xn89.gif" title="made at imgflip.com"/></a>
 <p/>
+
+[Watch it on Youtube!](https://www.youtube.com/watch?v=3t-Y-HlP0h8)
